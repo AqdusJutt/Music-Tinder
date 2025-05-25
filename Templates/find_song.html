@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Find Song</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: white;
+      padding-top: 90px;
+    }
+    .navbar {
+      background-color: #111;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .form-control, .btn {
+      border-radius: 12px;
+    }
+    .btn {
+      background-color: #28a745;
+      color: white;
+      transition: transform 0.3s ease-in-out;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+    }
+    .result-card {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      margin-top: 25px;
+    }
+    .popular {
+      margin-top: 40px;
+    }
+    .popular li {
+      margin-bottom: 10px;
+    }
+    .back-btn {
+      margin-top: 20px;
+      color: white;
+      text-decoration: none;
+    }
+    .back-btn i {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><i class="fas fa-music"></i> MUSIC TINDER</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h2 class="text-center mb-4">🎧 Find Song from Lyrics</h2>
+  <form method="POST">
+    <div class="input-group mb-3">
+      <input type="text" name="lyrics_snippet" class="form-control" placeholder="Enter lyrics snippet..." required value="{{ query }}">
+      <button class="btn" type="submit"><i class="fas fa-search"></i> Search</button>
+    </div>
+  </form>
+
+  {% if result %}
+  <div class="result-card">
+    <h4>{{ result.song_name }}</h4>
+    <p><strong>Artist:</strong> {{ result.artist }}</p>
+    <p><strong>Genre:</strong> {{ result.genre }}</p>
+  </div>
+  {% elif query %}
+  <div class="alert alert-warning text-center mt-4">No matching song found for "{{ query }}"</div>
+  {% endif %}
+
+  {% if popular_songs %}
+  <div class="popular">
+    <h5>📈 Trending Songs:</h5>
+    <ul>
+      {% for song in popular_songs %}
+      <li>{{ song.song_name }} by {{ song.artist }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <a class="back-btn" href="/"><i class="fas fa-arrow-left"></i> Back to Home</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
